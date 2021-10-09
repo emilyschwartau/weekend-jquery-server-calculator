@@ -11,7 +11,7 @@ app.use(express.static(`server/public`));
 // This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({ extended: true }))
 
-let calculations = []; 
+let calculations = ["Emily", "hi"]; 
 
 app.get('/calculation', (req, res) => {
     console.log (`got to /calculation GET`)
