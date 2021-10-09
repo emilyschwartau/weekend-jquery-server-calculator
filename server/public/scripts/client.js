@@ -25,7 +25,5 @@ function renderToDOM(calculations) {
                 ${calculation}
             </p>`
         );
-
     }//end for
-
 }; //end renderToDom

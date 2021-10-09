@@ -18,6 +18,13 @@ app.get('/calculation', (req, res) => {
     res.send(calculations);
 })
 
+app.post('/calculation', (req, res) => {
+    let calculation = req.body;
+    calculations.push(calculation);
+    console.log('pushed into calculations array', calculation);
+    res.sendStatus(201);
+})
+
 
 
 
