@@ -3,14 +3,15 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log("jquery is loaded!");
+    getOperations();
     getCalculations();
     $(`#equalsButton`).on(`click`, postCalculations);
     $(`#clearButton`).on(`click`, clearInputs);
-    $(`#plusButton`).on (`click`, plus);
-    $(`#minusButton`).on (`click`, minus);
-    $(`#multiplyButton`).on (`click`, multiply);
-    $(`#divideButton`).on (`click`, divide);
-}//end onReady
+    // $(`#plusButton`).on(`click`, plus);
+    // $(`#minusButton`).on(`click`, minus);
+    // $(`#multiplyButton`).on(`click`, multiply);
+    // $(`#divideButton`).on(`click`, divide);
+} //end onReady
 
 function getCalculations() {
     $.ajax({
@@ -19,11 +20,10 @@ function getCalculations() {
     }).then(function (response) {
         console.log('successful response', response);
         renderToDOM(response);
-        //calculator();
     }).catch(function (response) {
         alert('Im broken!!!!! :(');
     })
-}//end getCalculations
+} //end getCalculations
 
 function postCalculations() {
     $.ajax({
@@ -42,33 +42,29 @@ function postCalculations() {
     }).catch(function (response) {
         alert('You Broke It!!!', response)
     })
-}
+}//end postCalculations
 
 function renderToDOM(calculations) {
-    let answer = undefined; 
+    let answer = undefined;
     $(`#historyContainer`).empty();
-    
+
     for (let calculation of calculations) {
         if (calculation.operation == "+") {
             answer = Number(calculation.firstNumber) + Number(calculation.secondNumber);
             console.log(answer);
-          
-           
-        }//end if 
-        if(calculation.operation == "-") {
+        } //end if 
+        if (calculation.operation == "-") {
             answer = Number(calculation.firstNumber) - Number(calculation.secondNumber);
             console.log(answer);
-           
-            
-        }//end if 
-        if(calculation.operation == "x") {
+        } //end if 
+        if (calculation.operation == "x") {
             answer = Number(calculation.firstNumber) * Number(calculation.secondNumber);
             console.log(answer);
-        }//end if 
-        if(calculation.operation == "/") {
+        } //end if 
+        if (calculation.operation == "/") {
             answer = Number(calculation.firstNumber) / Number(calculation.secondNumber);
             console.log(answer);
-        }//end if 
+        } //end if 
         $(`#historyContainer`).append(
             `<p>
                 ${calculation.firstNumber}
@@ -79,38 +75,97 @@ function renderToDOM(calculations) {
         );
         $(`#answer`).empty();
         $(`#answer`).append(` `, answer);
-    }//end for
+    } //end for
 }; //end renderToDom
 
 function clearInputs() {
     $(`#firstNumInput`).val(``);
     $(`#secondNumInput`).val(``);
-}//end clearInputs
+} //end clearInputs
 
 //series of functions that push operation to array on button click
-let operationsArray = []
 
-function plus() {
-    operationsArray = [];
-   operationsArray.push("+");
-};
+///////////////////////////////////////////////////////
 
-function minus() {
-    operationsArray = [];
-    operationsArray.push("-");
-};
+//let operationsArray = []
 
-function multiply() {
-    operationsArray = [];
-    operationsArray.push("x");
-};
+function getOperations() {
+    $.ajax({
+        type: 'GET',
+        url: '/operation'
+    }).then(function (response) {
+        console.log('successful response', response);
+        //renderToDOM(response);
+        // $(`#plusButton`).on(`click`, plus);
+        // $(`#minusButton`).on(`click`, minus);
+        // $(`#multiplyButton`).on(`click`, multiply);
+        // $(`#divideButton`).on(`click`, divide);
+        calculator(response);
+    }).catch(function (response) {
+        alert('Im broken!!!!! :(');
+    })
+} //end getOperations
 
-function divide() {
-    operationsArray = [];
-    operationsArray.push("/");
-};
+function postOperations() {
+    $.ajax({
+        type: 'POST',
+        url: '/operation',
+        data: {
+            type: $(`.buttons`).on(`click`, calculator)
+        }
+    }).then(function (response) {
+        console.log('Great Success!!!');
+        getOperations();
+        //$('#firstNumInput').val(``);
+        //$('#secondNumInput').val(``);
+    }).catch(function (response) {
+        alert('You Broke It!!!', response)
+    })
+}//end postCalculations
 
+function calculator () {
+    $(`#plusButton`).on(`click`, plus);
+    $(`#minusButton`).on(`click`, minus);
+    $(`#multiplyButton`).on(`click`, multiply);
+    $(`#divideButton`).on(`click`, divide);  
 
+    function plus() {
+        operationsArray = [];
+        operationsArray.push("+");
+    };
+    
+    function minus() {
+        operationsArray = [];
+        operationsArray.push("-");
+    };
+    
+    function multiply() {
+        operationsArray = [];
+        operationsArray.push("x");
+    };
+    
+    function divide() {
+        operationsArray = [];
+        operationsArray.push("/");
+    };
+}//end calculator
 
+// function plus() {
+//     operationsArray = [];
+//     operationsArray.push("+");
+// };
 
+// function minus() {
+//     operationsArray = [];
+//     operationsArray.push("-");
+// };
 
+// function multiply() {
+//     operationsArray = [];
+//     operationsArray.push("x");
+// };
+
+// function divide() {
+//     operationsArray = [];
+//     operationsArray.push("/");
+// };

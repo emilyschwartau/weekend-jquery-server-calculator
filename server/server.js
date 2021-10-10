@@ -25,6 +25,21 @@ app.post('/calculation', (req, res) => {
     res.sendStatus(201);
 })
 
+//////////////////////////////////////////
+
+let operationsArray = []; 
+
+app.get('/operation', (req, res) => {
+    res.send(operationsArray);
+})
+
+app.post('/operation', (req, res) => {
+    let operation = req.body;
+    operationsArray.push(operation);
+    console.log('pushed into operationsArray', operation);
+    res.sendStatus(201);
+})
+
 
 
 
