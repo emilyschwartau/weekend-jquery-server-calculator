@@ -39,6 +39,7 @@ function postCalculations() {
 }
 
 function renderToDOM(calculations) {
+    $(`#historyContainer`).empty();
     for (let calculation of calculations) {
         $(`#historyContainer`).append(
             `<p>
