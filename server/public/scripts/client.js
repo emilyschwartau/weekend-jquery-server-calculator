@@ -11,27 +11,25 @@ function onReady() {
 }//end onReady
 
 function getCalculations() {
-    //$(`#plusButton`).on (`click`, req.body.operation = "+");
     $.ajax({
         type: 'GET',
         url: '/calculation'
     }).then(function (response) {
         console.log('successful response', response);
         renderToDOM(response);
+        //calculator();
     }).catch(function (response) {
         alert('Im broken!!!!! :(');
     })
 }//end getCalculations
 
 function postCalculations() {
-    //$(`#plusButton`).on (`click`, calculation.operation = "+");
     $.ajax({
         type: 'POST',
         url: '/calculation',
         data: {
             firstNumber: $(`#firstNumInput`).val(),
             secondNumber: $(`#secondNumInput`).val(),
-            // xxxxx
             operation: operationsArray
         }
     }).then(function (response) {
@@ -45,17 +43,34 @@ function postCalculations() {
 }
 
 function renderToDOM(calculations) {
+    $(`answer`).empty();
+    let answer =  
     $(`#historyContainer`).empty();
-    //xxxxxxxx
+    
     for (let calculation of calculations) {
-        //$(`#plusButton`).on (`click`, calculation.operation = "+");
+        if (calculation.operation == "+") {
+            answer = Number(calculation.firstNumber) + Number(calculation.secondNumber);
+            console.log(answer);
+            //$(`answer`).empty();
+           // $(`#answer`).append(` `, answer);
+           
+        }//end if 
+        if(calculation.operation == "-") {
+            answer = Number(calculation.firstNumber) - Number(calculation.secondNumber);
+            console.log(answer);
+           // $(`answer`).empty();
+           // $(`#answer`).append(` `, answer);
+            
+        }//end if 
         $(`#historyContainer`).append(
             `<p>
                 ${calculation.firstNumber}
                 ${calculation.operation}
                 ${calculation.secondNumber}
+                = ${answer}
             </p>`
         );
+        $(`#answer`).append(` `, answer);
     }//end for
 }; //end renderToDom
 
@@ -64,11 +79,11 @@ function clearInputs() {
     $(`#secondNumInput`).val(``);
 }//end clearInputs
 
+//series of functions that push operation to array on button click
 let operationsArray = []
 
 function plus() {
     operationsArray = [];
-   //$(`#plusButton`).on (`click`, calculation.operation = "+"); 
    operationsArray.push("+");
 };
 
@@ -76,3 +91,8 @@ function minus() {
     operationsArray = [];
     operationsArray.push("-");
 };
+
+//let answersArray = [];
+
+
+
