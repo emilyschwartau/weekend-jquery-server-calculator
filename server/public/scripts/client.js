@@ -62,12 +62,14 @@ function renderToDOM(calculations) {
             console.log(answer);
         } //end if 
         $(`#historyContainer`).append(
-            `<p>
+            `<ul>
+            <li>
                 ${calculation.firstNumber}
                 ${calculation.operation}
                 ${calculation.secondNumber}
                 = ${answer}
-            </p>`
+            </li>
+            </ul>`
         );
         $(`#answer`).empty();
         $(`#answer`).append(` `, answer);
