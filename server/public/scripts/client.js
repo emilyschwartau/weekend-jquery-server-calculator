@@ -7,10 +7,6 @@ function onReady() {
     getCalculations();
     $(`#equalsButton`).on(`click`, postCalculations);
     $(`#clearButton`).on(`click`, clearInputs);
-    // $(`#plusButton`).on(`click`, plus);
-    // $(`#minusButton`).on(`click`, minus);
-    // $(`#multiplyButton`).on(`click`, multiply);
-    // $(`#divideButton`).on(`click`, divide);
 } //end onReady
 
 function getCalculations() {
@@ -42,7 +38,7 @@ function postCalculations() {
     }).catch(function (response) {
         alert('You Broke It!!!', response)
     })
-}//end postCalculations
+} //end postCalculations
 
 function renderToDOM(calculations) {
     let answer = undefined;
@@ -83,11 +79,12 @@ function clearInputs() {
     $(`#secondNumInput`).val(``);
 } //end clearInputs
 
-//series of functions that push operation to array on button click
+
 
 ///////////////////////////////////////////////////////
-
-//let operationsArray = []
+//getting operation array from server & modifying 
+//don't need to post if clearing array in each function on click?
+//just working out of array on current basis so don't need to post to server?
 
 function getOperations() {
     $.ajax({
@@ -95,77 +92,35 @@ function getOperations() {
         url: '/operation'
     }).then(function (response) {
         console.log('successful response', response);
-        //renderToDOM(response);
-        // $(`#plusButton`).on(`click`, plus);
-        // $(`#minusButton`).on(`click`, minus);
-        // $(`#multiplyButton`).on(`click`, multiply);
-        // $(`#divideButton`).on(`click`, divide);
         calculator(response);
     }).catch(function (response) {
         alert('Im broken!!!!! :(');
     })
 } //end getOperations
 
-function postOperations() {
-    $.ajax({
-        type: 'POST',
-        url: '/operation',
-        data: {
-            type: $(`.buttons`).on(`click`, calculator)
-        }
-    }).then(function (response) {
-        console.log('Great Success!!!');
-        getOperations();
-        //$('#firstNumInput').val(``);
-        //$('#secondNumInput').val(``);
-    }).catch(function (response) {
-        alert('You Broke It!!!', response)
-    })
-}//end postCalculations
-
-function calculator () {
+function calculator() {
     $(`#plusButton`).on(`click`, plus);
     $(`#minusButton`).on(`click`, minus);
     $(`#multiplyButton`).on(`click`, multiply);
-    $(`#divideButton`).on(`click`, divide);  
+    $(`#divideButton`).on(`click`, divide);
 
     function plus() {
         operationsArray = [];
         operationsArray.push("+");
-    };
-    
+    } //end plus
+
     function minus() {
         operationsArray = [];
         operationsArray.push("-");
-    };
-    
+    } //end minus
+
     function multiply() {
         operationsArray = [];
         operationsArray.push("x");
-    };
-    
+    } //end multiply
+
     function divide() {
         operationsArray = [];
         operationsArray.push("/");
-    };
-}//end calculator
-
-// function plus() {
-//     operationsArray = [];
-//     operationsArray.push("+");
-// };
-
-// function minus() {
-//     operationsArray = [];
-//     operationsArray.push("-");
-// };
-
-// function multiply() {
-//     operationsArray = [];
-//     operationsArray.push("x");
-// };
-
-// function divide() {
-//     operationsArray = [];
-//     operationsArray.push("/");
-// };
+    } //end divide
+} //end calculator
