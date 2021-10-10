@@ -8,6 +8,8 @@ function onReady() {
     $(`#clearButton`).on(`click`, clearInputs);
     $(`#plusButton`).on (`click`, plus);
     $(`#minusButton`).on (`click`, minus);
+    $(`#multiplyButton`).on (`click`, multiply);
+    $(`#divideButton`).on (`click`, divide);
 }//end onReady
 
 function getCalculations() {
@@ -59,6 +61,14 @@ function renderToDOM(calculations) {
            
             
         }//end if 
+        if(calculation.operation == "x") {
+            answer = Number(calculation.firstNumber) * Number(calculation.secondNumber);
+            console.log(answer);
+        }//end if 
+        if(calculation.operation == "/") {
+            answer = Number(calculation.firstNumber) / Number(calculation.secondNumber);
+            console.log(answer);
+        }//end if 
         $(`#historyContainer`).append(
             `<p>
                 ${calculation.firstNumber}
@@ -90,7 +100,17 @@ function minus() {
     operationsArray.push("-");
 };
 
-//let answersArray = [];
+function multiply() {
+    operationsArray = [];
+    operationsArray.push("x");
+};
+
+function divide() {
+    operationsArray = [];
+    operationsArray.push("/");
+};
+
+
 
 
 
