@@ -20,6 +20,7 @@ app.get('/calculation', (req, res) => {
 
 app.post('/calculation', (req, res) => {
     let calculation = req.body;
+    //$(`#plusButton`).on (`click`, calculation.operation = "+");
     calculations.push(calculation);
     console.log('pushed into calculations array', calculation);
     res.sendStatus(201);
