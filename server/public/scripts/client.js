@@ -43,23 +43,20 @@ function postCalculations() {
 }
 
 function renderToDOM(calculations) {
-    $(`answer`).empty();
-    let answer =  
+    let answer = undefined; 
     $(`#historyContainer`).empty();
     
     for (let calculation of calculations) {
         if (calculation.operation == "+") {
             answer = Number(calculation.firstNumber) + Number(calculation.secondNumber);
             console.log(answer);
-            //$(`answer`).empty();
-           // $(`#answer`).append(` `, answer);
+          
            
         }//end if 
         if(calculation.operation == "-") {
             answer = Number(calculation.firstNumber) - Number(calculation.secondNumber);
             console.log(answer);
-           // $(`answer`).empty();
-           // $(`#answer`).append(` `, answer);
+           
             
         }//end if 
         $(`#historyContainer`).append(
@@ -70,6 +67,7 @@ function renderToDOM(calculations) {
                 = ${answer}
             </p>`
         );
+        $(`#answer`).empty();
         $(`#answer`).append(` `, answer);
     }//end for
 }; //end renderToDom
